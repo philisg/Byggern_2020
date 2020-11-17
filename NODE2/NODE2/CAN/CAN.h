@@ -1,3 +1,10 @@
+/**
+ * @file CAN.h
+ * @author TTK4155 2020 Group 28
+ * @date 17 nov 2020
+ * @brief File containing top level drivers for MCU based CAN bus communication.
+ */
+
 #ifndef CAN_H_
 #define CAN_H_
 
