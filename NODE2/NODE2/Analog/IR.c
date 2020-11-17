@@ -1,3 +1,9 @@
+/**
+*@file IR.c
+* @author TTK4155 2020 Group 28
+* @date 17 nov 2020
+* @brief File containing drivers IR.
+*/
 
 #include "IR.h"
 #include "ADC/ADC.h"
