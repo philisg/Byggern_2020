@@ -1,3 +1,9 @@
+/**
+ * @file ADC.c
+ * @author TTK4155 2020 Group 28
+ * @date 17 nov 2020
+ * @brief File containing drivers for 
+ */
 
 #include "Servo.h"
 #include "../Utility/Utility.h"
@@ -21,7 +27,7 @@ void Servo_init(void)
 }
 
 
-void Servo_move(uint8_t pos, uint8_t channel)
+void Servo_move(uint8_t pos, uint8_t channel)//old function 
 {
 	uint16_t x = 900 + (pos * 4.72); //
 	
