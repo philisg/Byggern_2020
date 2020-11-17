@@ -1,3 +1,11 @@
+/**
+ * @file Motor.c
+ * @author TTK4155 2020 Group 28
+ * @date 17 nov 2020
+ * @brief File containing drivers for motor and encoder.
+ *
+ */
+
 
 #include "sam.h"
 
@@ -26,7 +34,7 @@ float saturate(float f, float min, float max)
 	}	
 }
 
-void Motor_enable(uint8_t enable)
+void Motor_enable(uint8_t enable) //Start(1) or stop(0) motor
 {
     if(enable)
 	{
@@ -58,15 +66,15 @@ void Encoder_reset(void)
 	Delay_ms(20);
 }
 
-void Motor_init(void)
+void Motor_init(void) //Sets up the board to enable motor steering
 {
-    PMC->PMC_PCER0 |= PMC_PCER0_PID13 | PMC_PCER0_PID14; 
-	PIOC->PIO_PER |= 0x1FE; //enable PC1-PC8
-	PIOC->PIO_ODR |= 0x1FE; //sets PC1-PC8 to input
-	PIOD->PIO_PER |= PIO_PER_P0 | PIO_PER_P1 | PIO_PER_P2 | PIO_PER_P9 | PIO_PER_P10;	//enable PD9 and PD10
-	PIOD->PIO_OER |= PIO_OER_P0 | PIO_OER_P1 | PIO_OER_P2 | PIO_OER_P9 | PIO_PER_P10;	//enable output on PD9 and PD10
-	PIOD->PIO_CODR |=  PIO_SODR_P9; // sets enable low
-	PIOD->PIO_SODR |= PIO_SODR_P0 | PIO_SODR_P1;	// sets reset and OE pin high
+    PMC->PMC_PCER0 |= PMC_PCER0_PID13 | PMC_PCER0_PID14; //Enable clock
+    PIOC->PIO_PER |= 0x1FE; //enable PC1-PC8
+    PIOC->PIO_ODR |= 0x1FE; //sets PC1-PC8 to input
+    PIOD->PIO_PER |= PIO_PER_P0 | PIO_PER_P1 | PIO_PER_P2 | PIO_PER_P9 | PIO_PER_P10;	//enable PD9 and PD10
+    PIOD->PIO_OER |= PIO_OER_P0 | PIO_OER_P1 | PIO_OER_P2 | PIO_OER_P9 | PIO_PER_P10;	//enable output on PD9 and PD10
+    PIOD->PIO_CODR |=  PIO_SODR_P9; // sets enable low
+    PIOD->PIO_SODR |= PIO_SODR_P0 | PIO_SODR_P1;	// sets reset and OE pin high
 	
     Encoder_output_enable(1);
     Encoder_reset();
@@ -98,7 +106,7 @@ void Motor_set_speed(uint16_t speed)
 }
 
 
-void Motor_velocity(float vel)
+void Motor_velocity(float vel) // not used
 {
 //    vel = saturate(vel, -motor_vel_max, motor_vel_max);
 //    motor_speed((uint8_t)(fabs(vel) * 250.0));
@@ -106,7 +114,7 @@ void Motor_velocity(float vel)
 }
 
 
-int16_t Encoder_read(void)
+int16_t Encoder_read(void) //procedure for reading encoder
 {
   	int16_t Data;
   	
@@ -142,6 +150,8 @@ int16_t Encoder_read(void)
 
 //Right == negativ direction
 //Left == Positive direction
+//Sets the driver range for the motor 
+//Returns Reading of encoder when max is reached. 
 int16_t Encoder_limit(void)
 {
 	Motor_set_direction(RIGHT);
