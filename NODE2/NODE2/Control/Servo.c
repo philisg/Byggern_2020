@@ -9,14 +9,14 @@
 #include "../Utility/Utility.h"
 
 extern volatile pos_t position;
-volatile int8_t Servo_x_CAL = 0;
-volatile int8_t Servo_y_CAL = 0;
+volatile int8_t Servo_x_CAL = 0;//offset from 0
+volatile int8_t Servo_y_CAL = 0;//offset from 0
 
 void Servo_calibrate(void)
 {
 	Delay(20);
-	Servo_x_CAL = position.x;
-	Servo_y_CAL = position.y;
+	Servo_x_CAL = position.x; 
+	Servo_y_CAL = position.y; 
 }
 
 
@@ -35,7 +35,7 @@ void Servo_move(uint8_t pos, uint8_t channel)//old function
 }
 
 
-uint16_t Servo_calc_D(int8_t x, int8_t y)
+uint16_t Servo_calc_D(int8_t x, int8_t y)//makes sure the values are in the range -100 to 100
 {
 	x *= -1;
 	
@@ -74,7 +74,7 @@ void Servo_set_position(int8_t x, int8_t y)
 
 
 
-int8_t Servo_get_D(uint8_t channel)
+int8_t Servo_get_D(uint8_t channel)//get Duty_cycle
 {
 	switch(channel)
 	{
